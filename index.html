@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>長者接送狀態看板｜教學模擬</title>
+<style>
+:root{color-scheme:light;--ink:#203c3b;--muted:#576c6a;--line:#d8e3df;--green:#146657;--paper:#fff;--bg:#f3f6f3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Microsoft JhengHei","PingFang TC",sans-serif;line-height:1.65}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #176fbd;outline-offset:4px}main{max-width:1160px;margin:auto;padding:48px 28px 32px}.eyebrow{font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--green)}h1{font-size:clamp(28px,4vw,40px);line-height:1.3;margin:10px 0}p{margin:0}.intro{color:var(--muted)}.notice{margin:26px 0;background:#fff7e6;border:1px solid #e7cf97;border-radius:12px;padding:16px 20px;color:#69501c}.notice strong{display:block}.summary{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.stat{background:white;border:1px solid var(--line);border-radius:12px;padding:12px 20px;flex:1;min-width:150px;display:flex;align-items:center;justify-content:space-between;gap:16px}.stat b{font-size:28px}.stat span{font-size:15px;color:var(--muted)}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:28px 0 16px}h2{font-size:20px;margin:0}.secondary{background:white;border:1px solid #9aaca5;color:var(--ink);border-radius:8px;padding:9px 14px}.secondary:hover{background:#e7eee9}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 5px 18px #203c3b06}.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.code{font-size:24px;margin:0;letter-spacing:.06em}.badge{font-size:14px;font-weight:700;padding:4px 11px;border-radius:30px;white-space:nowrap}.waiting{color:#765410;background:#fff1cf}.out{color:#235a91;background:#e9f1ff}.home{color:#19614b;background:#e3f3e9}dl{margin:24px 0}dt{font-size:13px;color:var(--muted);margin-top:18px}dd{margin:4px 0 0;font-size:17px}.time{font-size:26px;font-variant-numeric:tabular-nums;font-weight:650}.status-label{font-size:13px;color:var(--muted);margin-bottom:8px}.switch{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.status-btn{min-height:44px;padding:8px 3px;border:1px solid #ccd9d2;border-radius:8px;background:#fff;color:var(--ink);font-size:14px}.status-btn:hover{background:#edf3ef}.status-btn[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:white;font-weight:700}.flag{margin-top:20px;padding:13px 10px;display:flex;gap:10px;align-items:center;background:#f5f7f4;border:1px solid transparent;border-radius:9px;font-size:15px;cursor:pointer}.flag:has(input:checked){background:#fff5dc;border-color:#e2be65;color:#704d08}.flag input{width:19px;height:19px;accent-color:#90640b;flex-shrink:0}.updated{border-top:1px solid var(--line);padding-top:14px;margin-top:18px;font-size:12px;color:var(--muted);min-height:36px}.guide{margin-top:28px;border-top:1px solid var(--line);padding-top:24px}.guide h2{font-size:17px;margin-bottom:10px}.guide ol{padding-left:24px;margin:0;color:var(--muted);font-size:15px}.bottom{margin-top:24px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}#feedback{min-height:26px;margin-top:12px;font-size:14px;color:var(--green)}#storage-message.problem{color:#8b430c}.demo{font-size:12px;color:var(--muted);margin-top:3px}
+@media(max-width:960px){.cards{grid-template-columns:1fr}.card{padding:22px}.switch{max-width:420px}.stat{min-width:130px}main{padding-top:28px}}@media(max-width:460px){main{padding:24px 16px}.stat{padding:10px 14px;min-width:calc(50% - 12px)}.toolbar{align-items:flex-start}h1{font-size:28px}.card{padding:20px}.secondary{font-size:13px}.notice{padding:14px 16px}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="eyebrow">照護交接練習 · 線上教學工具</div><h1>長者接送狀態看板</h1><p class="intro">查看安排、切換狀態，練習留下每次交接的更新紀錄。</p></header>
+<aside class="notice"><strong>教學模擬・全部為虛構範例</strong>狀態切換僅供練習。接送身分、授權與實際交接仍需人員確認；「已返家」須由人員確認送達，不能只憑離開中心判定。</aside>
+<section class="summary" aria-label="目前狀態統計" id="summary"></section>
+<div class="toolbar"><h2>今日接送安排</h2><button class="secondary" id="reset" type="button">重設虛構範例</button></div>
+<section class="cards" id="cards" aria-label="長者接送卡片"></section>
+<p id="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+<section class="guide"><h2>怎麼練習</h2><ol><li>查看代號、預定時間與接送安排，再選擇「待接送／已外出／已返家」。</li><li>接送安排有變動時，勾選「接送變更待確認」。切換狀態不會自動清除標記；確認後再手動取消勾選。</li><li>再次開啟本網頁可延續這個瀏覽器的紀錄；「重設虛構範例」可重新開始。</li></ol></section>
+<footer class="bottom"><span id="storage-message" role="status">操作結果儲存在此瀏覽器，不會上傳或跨裝置同步。</span><span>線上教學 · 虛構資料</span></footer>
+</main>
+<script>
+'use strict';
+const STORAGE_KEY='elder-transport-teaching-v1';
+const statuses=['待接送','已外出','已返家'];
+const badgeClasses=['waiting','out','home'];
+const samples=[
+ {id:'A01',time:'15:30',arrangement:'家屬接回｜中心門口交接',status:'待接送',pending:false,updatedAt:null},
+ {id:'A02',time:'16:00',arrangement:'交通接送車｜送達約定住家',status:'已外出',pending:true,updatedAt:null},
+ {id:'A03',time:'16:30',arrangement:'經同意的照顧者接回｜約定地點交接',status:'已返家',pending:false,updatedAt:null}
+];
+let records=samples.map(item=>({...item}));
+let storageWarning='';
+const cards=document.getElementById('cards');
+const summary=document.getElementById('summary');
+const feedback=document.getElementById('feedback');
+function showStorage(){const el=document.getElementById('storage-message');el.textContent=storageWarning||'已儲存於此瀏覽器，不會上傳或跨裝置同步。';el.classList.toggle('problem',Boolean(storageWarning));}
+function load(){
+ try{
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(raw===null)return;
+  const parsed=JSON.parse(raw);
+  if(!parsed||parsed.version!==1||!Array.isArray(parsed.records)||parsed.records.length!==samples.length)throw new Error('invalid data');
+  const restored=samples.map(sample=>{
+   const matches=parsed.records.filter(item=>item&&item.id===sample.id);
+   if(matches.length!==1)throw new Error('invalid record');
+   const saved=matches[0];
+   if(!statuses.includes(saved.status)||typeof saved.pending!=='boolean'||(saved.updatedAt!==null&&(typeof saved.updatedAt!=='string'||!Number.isFinite(Date.parse(saved.updatedAt)))))throw new Error('invalid value');
+   return {...sample,status:saved.status,pending:saved.pending,updatedAt:saved.updatedAt};
+  });
+  records=restored;
+ }catch(error){storageWarning='無法讀取本機紀錄，已載入範例。操作會嘗試重新儲存。';}
+}
+function save(){
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify({version:1,records}));storageWarning='';}
+ catch(error){storageWarning='瀏覽器不允許本機儲存，目前僅暫存於此頁；關閉或重新整理後可能遺失。';}
+ showStorage();
+}
+function formatTime(value){return value?new Date(value).toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}):'尚未操作（範例初始狀態）';}
+function renderSummary(){
+ summary.replaceChildren();
+ [...statuses,'變更待確認'].forEach((label,index)=>{
+  const count=index===3?records.filter(r=>r.pending).length:records.filter(r=>r.status===label).length;
+  const stat=document.createElement('div');stat.className='stat';
+  const name=document.createElement('span');name.textContent=label;
+  const total=document.createElement('b');total.textContent=count;
+  stat.append(name,total);summary.append(stat);
+ });
+}
+function updateCard(record){
+ const card=document.getElementById('card-'+record.id);
+ const badge=card.querySelector('.badge');
+ badge.textContent=record.status;badge.className='badge '+badgeClasses[statuses.indexOf(record.status)];
+ card.querySelectorAll('.status-btn').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.status===record.status)));
+ card.querySelector('input').checked=record.pending;
+ card.querySelector('.updated').textContent='最後更新：'+formatTime(record.updatedAt);
+ renderSummary();
+}
+function change(record,message){record.updatedAt=new Date().toISOString();save();updateCard(record);feedback.textContent=message+(storageWarning?'（目前僅暫存）':'，已儲存。');}
+function buildCards(){
+ cards.replaceChildren();
+ records.forEach(record=>{
+  const card=document.createElement('article');card.className='card';card.id='card-'+record.id;card.setAttribute('aria-labelledby','title-'+record.id);
+  card.innerHTML='<div class="card-top"><h3 class="code" id="title-'+record.id+'"></h3><span class="badge"></span></div><p class="demo">虛構長者代號</p><dl><dt>預定接送時間</dt><dd class="time"></dd><dt>接送安排</dt><dd class="arrangement"></dd></dl><p class="status-label">切換目前狀態</p><div class="switch" role="group"></div><label class="flag"><input type="checkbox"><span>接送變更待確認</span></label><p class="updated"></p>';
+  card.querySelector('h3').textContent=record.id;card.querySelector('.time').textContent=record.time;card.querySelector('.arrangement').textContent=record.arrangement;
+  const group=card.querySelector('.switch');group.setAttribute('aria-label',record.id+' 接送狀態');
+  statuses.forEach(status=>{const button=document.createElement('button');button.type='button';button.className='status-btn';button.dataset.status=status;button.textContent=status;button.addEventListener('click',()=>{if(record.status===status){feedback.textContent=record.id+' 目前已是「'+status+'」，沒有變更。';return;}record.status=status;change(record,record.id+' 已切換為「'+status+'」');});group.append(button);});
+  const checkbox=card.querySelector('input');checkbox.setAttribute('aria-label',record.id+' 接送變更待確認');checkbox.addEventListener('change',()=>{record.pending=checkbox.checked;change(record,record.id+(record.pending?' 已標記接送變更待確認':' 已取消接送變更待確認標記'));});
+  cards.append(card);updateCard(record);
+ });
+}
+document.getElementById('reset').addEventListener('click',()=>{
+ if(!window.confirm('要重設全部 3 筆虛構範例嗎？這會清除本看板目前的練習操作。'))return;
+ records=samples.map(item=>({...item}));save();buildCards();feedback.textContent='已重設 3 筆虛構範例。'+(storageWarning?'目前僅暫存。':'已儲存。');
+});
+load();buildCards();
+// 探測 file:// 或隱私模式的寫入限制，避免誤稱已持久儲存。
+save();
+</script>
+</body>
+</html>
