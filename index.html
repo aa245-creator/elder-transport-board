@@ -8,6 +8,7 @@
 :root{color-scheme:light;--ink:#203c3b;--muted:#576c6a;--line:#d8e3df;--green:#146657;--paper:#fff;--bg:#f3f6f3}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Microsoft JhengHei","PingFang TC",sans-serif;line-height:1.65}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #176fbd;outline-offset:4px}main{max-width:1160px;margin:auto;padding:48px 28px 32px}.eyebrow{font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--green)}h1{font-size:clamp(28px,4vw,40px);line-height:1.3;margin:10px 0}p{margin:0}.intro{color:var(--muted)}.notice{margin:26px 0;background:#fff7e6;border:1px solid #e7cf97;border-radius:12px;padding:16px 20px;color:#69501c}.notice strong{display:block}.summary{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.stat{background:white;border:1px solid var(--line);border-radius:12px;padding:12px 20px;flex:1;min-width:150px;display:flex;align-items:center;justify-content:space-between;gap:16px}.stat b{font-size:28px}.stat span{font-size:15px;color:var(--muted)}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:28px 0 16px}h2{font-size:20px;margin:0}.secondary{background:white;border:1px solid #9aaca5;color:var(--ink);border-radius:8px;padding:9px 14px}.secondary:hover{background:#e7eee9}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 5px 18px #203c3b06}.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.code{font-size:24px;margin:0;letter-spacing:.06em}.badge{font-size:14px;font-weight:700;padding:4px 11px;border-radius:30px;white-space:nowrap}.waiting{color:#765410;background:#fff1cf}.out{color:#235a91;background:#e9f1ff}.home{color:#19614b;background:#e3f3e9}dl{margin:24px 0}dt{font-size:13px;color:var(--muted);margin-top:18px}dd{margin:4px 0 0;font-size:17px}.time{font-size:26px;font-variant-numeric:tabular-nums;font-weight:650}.status-label{font-size:13px;color:var(--muted);margin-bottom:8px}.switch{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.status-btn{min-height:44px;padding:8px 3px;border:1px solid #ccd9d2;border-radius:8px;background:#fff;color:var(--ink);font-size:14px}.status-btn:hover{background:#edf3ef}.status-btn[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:white;font-weight:700}.flag{margin-top:20px;padding:13px 10px;display:flex;gap:10px;align-items:center;background:#f5f7f4;border:1px solid transparent;border-radius:9px;font-size:15px;cursor:pointer}.flag:has(input:checked){background:#fff5dc;border-color:#e2be65;color:#704d08}.flag input{width:19px;height:19px;accent-color:#90640b;flex-shrink:0}.updated{border-top:1px solid var(--line);padding-top:14px;margin-top:18px;font-size:12px;color:var(--muted);min-height:36px}.guide{margin-top:28px;border-top:1px solid var(--line);padding-top:24px}.guide h2{font-size:17px;margin-bottom:10px}.guide ol{padding-left:24px;margin:0;color:var(--muted);font-size:15px}.bottom{margin-top:24px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}#feedback{min-height:26px;margin-top:12px;font-size:14px;color:var(--green)}#storage-message.problem{color:#8b430c}.demo{font-size:12px;color:var(--muted);margin-top:3px}
 @media(max-width:960px){.cards{grid-template-columns:1fr}.card{padding:22px}.switch{max-width:420px}.stat{min-width:130px}main{padding-top:28px}}@media(max-width:460px){main{padding:24px 16px}.stat{padding:10px 14px;min-width:calc(50% - 12px)}.toolbar{align-items:flex-start}h1{font-size:28px}.card{padding:20px}.secondary{font-size:13px}.notice{padding:14px 16px}}
+.info-form,.comment-area{border-top:1px solid var(--line);margin-top:22px;padding-top:20px}.section-title{font-size:17px;margin:0 0 12px}.field{display:block;font-size:14px;margin:12px 0;color:var(--muted)}.field input,.field textarea{display:block;width:100%;margin-top:5px;padding:10px 12px;border:1px solid #b6c9c0;border-radius:8px;background:white;color:var(--ink);font:inherit}.field textarea{resize:vertical;min-height:96px}.field textarea:focus-visible{outline:3px solid #176fbd;outline-offset:3px}.verify{display:flex;gap:9px;align-items:flex-start;font-size:14px;margin:12px 0}.verify input{width:18px;height:18px;flex-shrink:0;accent-color:var(--green);margin-top:3px}.primary{background:var(--green);color:white;border:0;border-radius:8px;padding:10px 14px;min-height:44px;font:inherit}.primary:hover{background:#104f43}.help,.form-result{font-size:12px;color:var(--muted);margin-top:9px}.form-result{min-height:20px;color:var(--green)}.confirmation{font-size:13px;color:#765410;margin-bottom:12px}.confirmation.complete{color:var(--green)}.comments{list-style:none;margin:16px 0;padding:0;max-height:280px;overflow:auto}.comment{padding:12px 0;border-bottom:1px solid var(--line)}.comment-meta{font-size:12px;color:var(--muted);margin-bottom:5px}.comment-text{font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -30,8 +31,8 @@ const samples=[
  {id:'A01',time:'15:30',arrangement:'家屬接回｜中心門口交接',status:'待接送',pending:false,updatedAt:null},
  {id:'A02',time:'16:00',arrangement:'交通接送車｜送達約定住家',status:'已外出',pending:true,updatedAt:null},
  {id:'A03',time:'16:30',arrangement:'經同意的照顧者接回｜約定地點交接',status:'已返家',pending:false,updatedAt:null}
-];
-let records=samples.map(item=>({...item}));
+].map(item=>({...item,receiverName:'',receiverRelation:'',identityVerified:false,authorizationVerified:false,receiverUpdatedAt:null,comments:[]}));
+let records=samples.map(item=>({...item,comments:[]}));
 let storageWarning='';
 const cards=document.getElementById('cards');
 const summary=document.getElementById('summary');
@@ -48,7 +49,9 @@ function load(){
    if(matches.length!==1)throw new Error('invalid record');
    const saved=matches[0];
    if(!statuses.includes(saved.status)||typeof saved.pending!=='boolean'||(saved.updatedAt!==null&&(typeof saved.updatedAt!=='string'||!Number.isFinite(Date.parse(saved.updatedAt)))))throw new Error('invalid value');
-   return {...sample,status:saved.status,pending:saved.pending,updatedAt:saved.updatedAt};
+   const validDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value));
+   const comments=Array.isArray(saved.comments)?saved.comments.filter(c=>c&&typeof c.author==='string'&&typeof c.text==='string'&&validDate(c.createdAt)).map(c=>({author:c.author.slice(0,30),text:c.text.slice(0,1000),createdAt:c.createdAt})):[];
+   return {...sample,status:saved.status,pending:saved.pending,updatedAt:saved.updatedAt,receiverName:typeof saved.receiverName==='string'?saved.receiverName.slice(0,40):'',receiverRelation:typeof saved.receiverRelation==='string'?saved.receiverRelation.slice(0,40):'',identityVerified:saved.identityVerified===true,authorizationVerified:saved.authorizationVerified===true,receiverUpdatedAt:validDate(saved.receiverUpdatedAt)?saved.receiverUpdatedAt:null,comments};
   });
   records=restored;
  }catch(error){storageWarning='無法讀取本機紀錄，已載入範例。操作會嘗試重新儲存。';}
@@ -79,6 +82,25 @@ function updateCard(record){
  renderSummary();
 }
 function change(record,message){record.updatedAt=new Date().toISOString();save();updateCard(record);feedback.textContent=message+(storageWarning?'（目前僅暫存）':'，已儲存。');}
+function addReceiverAndComments(card,record){
+ const form=document.createElement('form');form.className='info-form';
+ form.innerHTML='<h4 class="section-title">接送者資訊確認</h4><p class="confirmation" role="status"></p><label class="field">接送者稱呼（虛構）<input name="receiverName" maxlength="40" placeholder="例如：範例家屬甲" required></label><label class="field">與長者關係／角色<input name="receiverRelation" maxlength="40" placeholder="例如：家屬、接送人員" required></label><label class="verify"><input type="checkbox" name="identityVerified"><span>人員已核對接送者身分</span></label><label class="verify"><input type="checkbox" name="authorizationVerified"><span>人員已核對本次接送授權</span></label><p class="help">此處僅記錄模擬確認，不代表系統已驗證身分。請勿填入真實姓名、證件、電話或地址。</p><button class="primary" type="submit">儲存接送者資訊</button><p class="form-result" role="status" aria-live="polite"></p>';
+ const name=form.elements.receiverName,relation=form.elements.receiverRelation,identity=form.elements.identityVerified,authorization=form.elements.authorizationVerified;
+ name.value=record.receiverName;relation.value=record.receiverRelation;identity.checked=record.identityVerified;authorization.checked=record.authorizationVerified;
+ const confirmation=form.querySelector('.confirmation');
+ function showConfirmation(){const complete=Boolean(record.receiverName&&record.receiverRelation&&record.identityVerified&&record.authorizationVerified);confirmation.classList.toggle('complete',complete);confirmation.textContent=(complete?'已記錄：身分與授權皆確認':'待確認：接送者資料、身分或授權尚未確認')+(record.receiverUpdatedAt?'｜'+formatTime(record.receiverUpdatedAt):'');}
+ showConfirmation();
+ [name,relation].forEach(input=>input.addEventListener('input',()=>{identity.checked=false;authorization.checked=false;form.querySelector('.form-result').textContent='資訊已修改，請重新核對身分與授權，再儲存。';}));
+ [identity,authorization].forEach(input=>input.addEventListener('change',()=>{form.querySelector('.form-result').textContent='有尚未儲存的確認變更。';}));
+ form.addEventListener('submit',event=>{event.preventDefault();if(!name.value.trim()||!relation.value.trim()){form.querySelector('.form-result').textContent='請填寫接送者稱呼與關係／角色。';return;}record.receiverName=name.value.trim();record.receiverRelation=relation.value.trim();record.identityVerified=identity.checked;record.authorizationVerified=authorization.checked;record.receiverUpdatedAt=new Date().toISOString();change(record,record.id+' 接送者資訊已更新');showConfirmation();form.querySelector('.form-result').textContent=storageWarning?'資訊已暫存，關閉後可能遺失。':'接送者資訊與確認結果已儲存。';});
+ card.append(form);
+ const section=document.createElement('section');section.className='comment-area';section.setAttribute('aria-label',record.id+' 留言區');
+ section.innerHTML='<h4 class="section-title">交接留言區</h4><p class="help">留言只在此瀏覽器保存，不是公開或多人即時留言板。僅填寫虛構教學內容。</p><ul class="comments" aria-label="已儲存留言"></ul><form><label class="field">留言者稱呼（選填）<input name="author" maxlength="30" placeholder="例如：練習者甲"></label><label class="field">交接留言<textarea name="message" maxlength="1000" placeholder="例如：接送時間有變更，請先核對安排。" required></textarea></label><button class="primary" type="submit">新增留言</button><p class="form-result" role="status" aria-live="polite"></p></form>';
+ const list=section.querySelector('.comments');
+ function renderComments(){list.replaceChildren();if(!record.comments.length){const li=document.createElement('li');li.className='help';li.textContent='尚無留言';list.append(li);return;}record.comments.slice().reverse().forEach(comment=>{const li=document.createElement('li');li.className='comment';const meta=document.createElement('p');meta.className='comment-meta';meta.textContent=comment.author+' · '+formatTime(comment.createdAt);const text=document.createElement('p');text.className='comment-text';text.textContent=comment.text;li.append(meta,text);list.append(li);});}
+ const commentForm=section.querySelector('form');commentForm.addEventListener('submit',event=>{event.preventDefault();const message=commentForm.elements.message.value.trim();if(!message){commentForm.querySelector('.form-result').textContent='請先填寫留言內容。';return;}record.comments.push({author:commentForm.elements.author.value.trim()||'未署名',text:message,createdAt:new Date().toISOString()});change(record,record.id+' 已新增留言');commentForm.elements.message.value='';renderComments();commentForm.querySelector('.form-result').textContent=storageWarning?'留言已暫存，關閉後可能遺失。':'留言已儲存於此瀏覽器。';});
+ renderComments();card.append(section);
+}
 function buildCards(){
  cards.replaceChildren();
  records.forEach(record=>{
@@ -88,12 +110,12 @@ function buildCards(){
   const group=card.querySelector('.switch');group.setAttribute('aria-label',record.id+' 接送狀態');
   statuses.forEach(status=>{const button=document.createElement('button');button.type='button';button.className='status-btn';button.dataset.status=status;button.textContent=status;button.addEventListener('click',()=>{if(record.status===status){feedback.textContent=record.id+' 目前已是「'+status+'」，沒有變更。';return;}record.status=status;change(record,record.id+' 已切換為「'+status+'」');});group.append(button);});
   const checkbox=card.querySelector('input');checkbox.setAttribute('aria-label',record.id+' 接送變更待確認');checkbox.addEventListener('change',()=>{record.pending=checkbox.checked;change(record,record.id+(record.pending?' 已標記接送變更待確認':' 已取消接送變更待確認標記'));});
-  cards.append(card);updateCard(record);
+  addReceiverAndComments(card,record);cards.append(card);updateCard(record);
  });
 }
 document.getElementById('reset').addEventListener('click',()=>{
  if(!window.confirm('要重設全部 3 筆虛構範例嗎？這會清除本看板目前的練習操作。'))return;
- records=samples.map(item=>({...item}));save();buildCards();feedback.textContent='已重設 3 筆虛構範例。'+(storageWarning?'目前僅暫存。':'已儲存。');
+ records=samples.map(item=>({...item,comments:[]}));save();buildCards();feedback.textContent='已重設 3 筆虛構範例。'+(storageWarning?'目前僅暫存。':'已儲存。');
 });
 load();buildCards();
 // 探測 file:// 或隱私模式的寫入限制，避免誤稱已持久儲存。
