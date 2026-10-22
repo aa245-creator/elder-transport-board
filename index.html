@@ -10,6 +10,7 @@
 @media(max-width:960px){.cards{grid-template-columns:1fr}.card{padding:22px}.switch{max-width:420px}.stat{min-width:130px}main{padding-top:28px}}@media(max-width:460px){main{padding:24px 16px}.stat{padding:10px 14px;min-width:calc(50% - 12px)}.toolbar{align-items:flex-start}h1{font-size:28px}.card{padding:20px}.secondary{font-size:13px}.notice{padding:14px 16px}}
 .info-form,.comment-area{border-top:1px solid var(--line);margin-top:22px;padding-top:20px}.section-title{font-size:17px;margin:0 0 12px}.field{display:block;font-size:14px;margin:12px 0;color:var(--muted)}.field input,.field textarea{display:block;width:100%;margin-top:5px;padding:10px 12px;border:1px solid #b6c9c0;border-radius:8px;background:white;color:var(--ink);font:inherit}.field textarea{resize:vertical;min-height:96px}.field textarea:focus-visible{outline:3px solid #176fbd;outline-offset:3px}.verify{display:flex;gap:9px;align-items:flex-start;font-size:14px;margin:12px 0}.verify input{width:18px;height:18px;flex-shrink:0;accent-color:var(--green);margin-top:3px}.primary{background:var(--green);color:white;border:0;border-radius:8px;padding:10px 14px;min-height:44px;font:inherit}.primary:hover{background:#104f43}.help,.form-result{font-size:12px;color:var(--muted);margin-top:9px}.form-result{min-height:20px;color:var(--green)}.confirmation{font-size:13px;color:#765410;margin-bottom:12px}.confirmation.complete{color:var(--green)}.comments{list-style:none;margin:16px 0;padding:0;max-height:280px;overflow:auto}.comment{padding:12px 0;border-bottom:1px solid var(--line)}.comment-meta{font-size:12px;color:var(--muted);margin-bottom:5px}.comment-text{font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
 .workflow{margin-top:32px;padding:26px;background:white;border:1px solid var(--line);border-radius:16px}.workflow-head{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.workflow select{font:inherit;color:var(--ink);padding:9px 12px;border:1px solid #b6c9c0;border-radius:8px;background:white}.workflow-intro{color:var(--muted);font-size:14px;margin:12px 0 20px}.role-step{border:1px solid var(--line);border-radius:10px;margin:12px 0;overflow:hidden}.role-step summary{padding:16px;cursor:pointer;font-weight:650;background:#f7f9f6;display:flex;gap:12px;align-items:center;justify-content:space-between}.role-state{font-size:12px;font-weight:400;color:var(--muted)}.role-form{padding:0 20px 18px}.role-duty{font-size:14px;margin:16px 0;color:var(--muted)}.role-fields{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}.role-full{grid-column:1/-1}#workflow-progress{font-size:14px;color:var(--green);margin:12px 0}.role-link{display:inline-block;margin-top:14px;color:var(--green);font-size:14px}@media(max-width:650px){.role-fields{grid-template-columns:1fr}.workflow{padding:18px}.role-form{padding:0 14px 16px}}
+.new-case{margin:20px 0;background:white;border:1px solid var(--line);border-radius:12px;padding:18px 22px}.new-case summary{cursor:pointer;font-weight:700;color:var(--green);font-size:18px}.new-fields{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.new-case select{display:block;width:100%;font:inherit;padding:10px;border:1px solid #b6c9c0;border-radius:8px;margin-top:5px;background:white;color:var(--ink)}@media(max-width:650px){.new-fields{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -17,7 +18,8 @@
 <header><div class="eyebrow">照護交接練習 · 線上教學工具</div><h1>長者接送狀態看板</h1><p class="intro">查看安排、切換狀態，練習留下每次交接的更新紀錄。</p></header>
 <aside class="notice"><strong>教學模擬・全部為虛構範例</strong>狀態切換僅供練習。接送身分、授權與實際交接仍需人員確認；「已返家」須由人員確認送達，不能只憑離開中心判定。</aside>
 <section class="summary" aria-label="目前狀態統計" id="summary"></section>
-<div class="toolbar"><h2>今日接送安排</h2><button class="secondary" id="reset" type="button">重設虛構範例</button></div>
+<details class="new-case" id="new-case" open><summary>＋ 新增教學個案</summary><p class="help">填寫代號、預定時間與接送安排，即可新增卡片。請使用虛構資料，並先儲存其他尚未儲存的欄位。</p><form id="new-case-form"><div class="new-fields"><label class="field">個案代號<input name="caseId" maxlength="16" pattern="[A-Za-z0-9][A-Za-z0-9_-]{0,15}" placeholder="例如：A04" required></label><label class="field">預定接送時間<input name="caseTime" type="time" required></label><label class="field">接送安排<input name="caseArrangement" maxlength="120" placeholder="例如：範例家屬接回｜中心門口" required></label><label class="field">初始狀態<select name="caseStatus"><option>待接送</option><option>已外出</option><option>已返家</option></select></label></div><button class="primary" type="submit">新增個案</button><p id="new-case-result" class="form-result" role="status" aria-live="polite"></p></form></details>
+<div class="toolbar"><h2>今日接送安排 <span id="case-count"></span></h2><button class="secondary" id="reset" type="button">重設為 3 筆範例</button></div>
 <section class="cards" id="cards" aria-label="長者接送卡片"></section>
 <p id="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
 <section class="workflow" id="workflow" aria-labelledby="workflow-title"><div class="workflow-head"><h2 id="workflow-title">角色交接紀錄</h2><label>選擇長者代號 <select id="workflow-record"><option value="A01">A01</option><option value="A02">A02</option><option value="A03">A03</option></select></label></div><p class="workflow-intro">依五個角色留下接續依據。同一人可兼任，但每階段分別記錄。請先儲存再切換代號；這些紀錄不會自動切換卡片狀態，或取代現場身分、授權與送達確認。</p><p id="workflow-progress" role="status" aria-live="polite"></p><div id="workflow-steps"></div></section>
@@ -45,11 +47,15 @@ function load(){
   const raw=localStorage.getItem(STORAGE_KEY);
   if(raw===null)return;
   const parsed=JSON.parse(raw);
-  if(!parsed||parsed.version!==1||!Array.isArray(parsed.records)||parsed.records.length!==samples.length)throw new Error('invalid data');
-  const restored=samples.map(sample=>{
-   const matches=parsed.records.filter(item=>item&&item.id===sample.id);
-   if(matches.length!==1)throw new Error('invalid record');
-   const saved=matches[0];
+  if(!parsed||parsed.version!==1||!Array.isArray(parsed.records)||!parsed.records.length)throw new Error('invalid data');
+  const seen=new Set();
+  const restored=parsed.records.map(saved=>{
+   if(!saved||typeof saved.id!=='string'||!caseIdValid(saved.id)||seen.has(saved.id))throw new Error('invalid record');seen.add(saved.id);
+   const original=samples.find(item=>item.id===saved.id);
+   const time=typeof saved.time==='string'?saved.time:original?.time;
+   const arrangement=typeof saved.arrangement==='string'?saved.arrangement:original?.arrangement;
+   if(!timeValid(time)||typeof arrangement!=='string'||!arrangement.trim()||arrangement.length>120)throw new Error('invalid arrangement');
+   const sample=createCase(saved.id,time,arrangement,saved.status);
    if(!statuses.includes(saved.status)||typeof saved.pending!=='boolean'||(saved.updatedAt!==null&&(typeof saved.updatedAt!=='string'||!Number.isFinite(Date.parse(saved.updatedAt)))))throw new Error('invalid value');
    const validDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value));
    const comments=Array.isArray(saved.comments)?saved.comments.filter(c=>c&&typeof c.author==='string'&&typeof c.text==='string'&&validDate(c.createdAt)).map(c=>({author:c.author.slice(0,30),text:c.text.slice(0,1000),createdAt:c.createdAt})):[];
@@ -90,6 +96,11 @@ function updateCard(record){
  renderSummary();
 }
 function change(record,message){record.updatedAt=new Date().toISOString();save();updateCard(record);feedback.textContent=message+(storageWarning?'（目前僅暫存）':'，已儲存。');}
+function caseIdValid(value){return /^[A-Z0-9][A-Z0-9_-]{0,15}$/.test(value);}
+function timeValid(value){return typeof value==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(value);}
+function createCase(id,time,arrangement,status){return {id,time,arrangement,status,pending:false,updatedAt:null,receiverName:'',receiverRelation:'',identityVerified:false,authorizationVerified:false,receiverUpdatedAt:null,comments:[],workflow:{}};}
+function createCaseFromInput(id,time,arrangement,status){id=id.trim().toUpperCase();arrangement=arrangement.trim();if(!caseIdValid(id))throw new Error('代號請使用 1–16 個英文字母、數字、底線或連字號，並以英數字開頭。');if(records.some(r=>r.id===id))throw new Error('個案代號 '+id+' 已存在，請使用不同代號。');if(!timeValid(time))throw new Error('請填寫有效的預定接送時間。');if(!arrangement||arrangement.length>120)throw new Error('請填寫 1–120 字的接送安排。');if(!statuses.includes(status))throw new Error('請選擇有效的初始狀態。');const record=createCase(id,time,arrangement,status);record.updatedAt=new Date().toISOString();records.push(record);return record;}
+function renderRecordOptions(){const selected=workflowSelect.value;workflowSelect.replaceChildren();records.forEach(record=>{const option=document.createElement('option');option.value=record.id;option.textContent=record.id;workflowSelect.append(option);});workflowSelect.value=records.some(r=>r.id===selected)?selected:records[0].id;document.getElementById('case-count').textContent='（'+records.length+' 筆）';}
 const roleStages=[
  {key:'arrange',name:'安排窗口',duty:'接收請求、查證來源、維護目前版本',result:'目前版本與已確認安排',evidence:'確認人與待回覆名單',time:'安排確認時間',hint:'記錄版本、接送時間與安排；未核實的變更請明列待確認。'},
  {key:'duty',name:'當班確認人',duty:'依中心規則核對權限，處理矛盾與例外',result:'採用或不採用的決定及理由',evidence:'核對依據、矛盾與例外處理',time:'決定時間',hint:'說明採用／不採用／待查證；列明依據與接續處理人。'},
@@ -121,6 +132,7 @@ function renderWorkflow(){
  });showProgress();
 }
 workflowSelect.addEventListener('change',renderWorkflow);
+document.getElementById('new-case-form').addEventListener('submit',event=>{event.preventDefault();const form=event.currentTarget;const message=document.getElementById('new-case-result');try{const record=createCaseFromInput(form.elements.caseId.value,form.elements.caseTime.value,form.elements.caseArrangement.value,form.elements.caseStatus.value);save();buildCards();renderRecordOptions();workflowSelect.value=record.id;renderWorkflow();form.reset();message.textContent=record.id+' 已新增，可在下方卡片填寫接送者確認、留言與五角色紀錄。'+(storageWarning?'目前僅暫存，關閉後可能遺失。':'已儲存於此瀏覽器。');feedback.textContent=record.id+' 個案已新增。';}catch(error){message.textContent=error.message;}});
 function addReceiverAndComments(card,record){
  const form=document.createElement('form');form.className='info-form';
  form.innerHTML='<h4 class="section-title">接送者資訊確認</h4><p class="confirmation" role="status"></p><label class="field">接送者稱呼（虛構）<input name="receiverName" maxlength="40" placeholder="例如：範例家屬甲" required></label><label class="field">與長者關係／角色<input name="receiverRelation" maxlength="40" placeholder="例如：家屬、接送人員" required></label><label class="verify"><input type="checkbox" name="identityVerified"><span>人員已核對接送者身分</span></label><label class="verify"><input type="checkbox" name="authorizationVerified"><span>人員已核對本次接送授權</span></label><p class="help">此處僅記錄模擬確認，不代表系統已驗證身分。請勿填入真實姓名、證件、電話或地址。</p><button class="primary" type="submit">儲存接送者資訊</button><p class="form-result" role="status" aria-live="polite"></p>';
@@ -153,10 +165,10 @@ function buildCards(){
  });
 }
 document.getElementById('reset').addEventListener('click',()=>{
- if(!window.confirm('要重設全部 3 筆虛構範例嗎？這會清除本看板目前的練習操作。'))return;
- records=samples.map(item=>({...item,comments:[],workflow:{}}));save();buildCards();renderWorkflow();feedback.textContent='已重設 3 筆虛構範例。'+(storageWarning?'目前僅暫存。':'已儲存。');
+ if(!window.confirm('要重設為 3 筆虛構範例嗎？這會移除所有新增個案，並清除本瀏覽器目前的練習紀錄與留言。'))return;
+ records=samples.map(item=>({...item,comments:[],workflow:{}}));save();buildCards();renderRecordOptions();renderWorkflow();document.getElementById('new-case-result').textContent='';feedback.textContent='已重設 3 筆虛構範例。'+(storageWarning?'目前僅暫存。':'已儲存。');
 });
-load();buildCards();renderWorkflow();
+load();buildCards();renderRecordOptions();renderWorkflow();
 // 探測 file:// 或隱私模式的寫入限制，避免誤稱已持久儲存。
 save();
 </script>
